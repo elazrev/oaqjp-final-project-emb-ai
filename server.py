@@ -19,15 +19,15 @@ def api_emotion_detector():
     if res['dominant_emotion'] is None:
         return jsonify(message="Invalid text! Please try again!"), 400
 
-    return f"""<p>
-    For the given statement, the system response is <br>
-    'anger': {res['anger']}, <br>
-    'disgust': {res['disgust']}, <br>
-    'fear': {res['fear']}, <br>
-    'joy': {res['joy']}<br> 
-    and 'sadness': {res['sadness']}.<br> 
-    The dominant emotion is <b>{res['dominant_emotion']}</b>.
-    </p>""", 200
+    return{
+        "anger": res['anger'], 
+        "disgust": res['disgust'], 
+        "fear": res['fear'], 
+        "joy": res['joy'], 
+        "sadness": res['sadness'], 
+        "dominant_emotion":res['dominant_emotion']    
+         }
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
