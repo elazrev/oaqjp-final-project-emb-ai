@@ -19,14 +19,10 @@ def emotion_detector(text_to_analyse: str):
         emotions = result['emotionPredictions'][0]['emotion']
         sorted_emotions = sorted(emotions.items(), key=lambda item: item[1], reverse=True)
         dominant_emotion_name, dominant_emotion_score = sorted_emotions[0]
+        emotions.update({"dominate_emotion": dominant_emotion_name})
+        
 
-        ans_format = {
-            "text": text_to_analyse,
-            "emotions": emotions,
-            "dominant emotion": {dominant_emotion_name: dominant_emotion_score}
-        }
-
-        return ans_format
+        return emotions
 
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}
