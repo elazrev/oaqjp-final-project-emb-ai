@@ -14,12 +14,22 @@ def emotion_detector(text_to_analyse: str):
 
     try:
         response = requests.post(url, json=payload, headers=headers)
+        if response.status_code == 400:
+            return {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+        }
+        
         response.raise_for_status()
         result = response.json()
         emotions = result['emotionPredictions'][0]['emotion']
         sorted_emotions = sorted(emotions.items(), key=lambda item: item[1], reverse=True)
         dominant_emotion_name, dominant_emotion_score = sorted_emotions[0]
-        emotions.update({"dominate_emotion": dominant_emotion_name})
+        emotions.update({"dominant_emotion": dominant_emotion_name})
         
 
         return emotions
