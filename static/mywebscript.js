@@ -1,17 +1,12 @@
-let RunSentimentAnalysis = () => {
-    let textToAnalyze = document.getElementById("textToAnalyze").value;
-    let encodedText = encodeURIComponent(textToAnalyze);
+let RunSentimentAnalysis = ()=>{
+    textToAnalyze = document.getElementById("textToAnalyze").value;
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                document.getElementById("system_response").innerHTML = xhttp.responseText;
-            } else {
-                document.getElementById("system_response").innerHTML = "<p><b>Error: " + this.status + "</b></p>";
-            }
+        if (this.readyState == 4 && this.status == 200 || this.status == 400) {
+            document.getElementById("system_response").innerHTML = xhttp.responseText;
         }
     };
-    xhttp.open("GET", "emotionDetector?textToAnalyze=" + encodedText, true);
+    xhttp.open("GET", "emotionDetector?textToAnalyze"+"="+textToAnalyze, true);
     xhttp.send();
 }
