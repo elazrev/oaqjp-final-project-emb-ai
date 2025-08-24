@@ -10,19 +10,28 @@ class TestEmotionDetector(unittest.TestCase):
         "sadness": "I am so sad about this",
         "fear": "I am really afraid that this will happen"
     }
+    def test_joy(self):
+        self._run_emotion_test("joy")
+    def test_anger(self):
+        self._run_emotion_test("anger")
+    def test_disgust(self):
+        self._run_emotion_test("disgust")
+    def test_sadness(self):
+        self._run_emotion_test("sadness")
+    def test_fear(self):
+        self._run_emotion_test("fear")
 
-    def test_emotion_detector(self):
-        
-        for expected_emotion, statement in self.emotions_test_dict.items():
-            res = emotion_detector(statement)
-            dominant_emotion = next(iter(res['dominant emotion']))
+    def _run_emotion_test(self, emotion_key):
 
-            self.assertEqual(
-                dominant_emotion,
-                expected_emotion,
-                msg=f"Expected '{expected_emotion}' but got '{dominant_emotion}' for input: '{statement}'"
-            )
-
+        text = self.emotions_test_dict[emotion_key]
+        res = emotion_detector(text)
+        dominant = next(iter(res['dominant emotion']))
+        print(f"\n{emotion_key.upper()} Test → Input: '{text}' → Detected: '{dominant}'")
+        self.assertEqual(
+            dominant,
+            emotion_key,
+            msg=f"Expected '{emotion_key}' but got '{dominant}' for input: '{text}'"
+        )
 
 
 
